@@ -1,7 +1,11 @@
 import { addPlugin, addServerHandler, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import { defu } from 'defu'
-import { DEVTOOLS_MODULE_KEY, DEVTOOLS_MODULE_NAME } from './contants'
+import { DEVTOOLS_MODULE_KEY, DEVTOOLS_MODULE_NAME, DEVTOOLS_RPC_NAMESPACE } from './contants'
 import { setupDevToolsUI } from './devtools'
+import { useViteWebSocket } from './utils'
+import { extendServerRpc, onDevToolsInitialized } from '@nuxt/devtools-kit'
+import { setupRPC } from './rpc'
+import type { ClientFunctions, ServerFunctions } from './types'
 
 
 // Module options TypeScript interface definition
@@ -40,7 +44,7 @@ export default defineNuxtModule<ModuleOptions>({
     if (nuxt.options.dev && isDevToolsEnabled) {
       setupDevToolsUI(options)
     }
-
+    
     logger.success(`${DEVTOOLS_MODULE_NAME} is ready!`)
   },
 })

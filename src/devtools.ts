@@ -1,13 +1,12 @@
-import { existsSync } from 'node:fs'
-import type { Nuxt } from 'nuxt/schema'
-import { createResolver, logger, useNuxt, type Resolver } from '@nuxt/kit'
 import { addCustomTab, extendServerRpc, onDevToolsInitialized } from '@nuxt/devtools-kit'
-import type { ClientFunctions, ServerFunctions } from './types'
+import { createResolver, logger, useNuxt } from '@nuxt/kit'
+import { existsSync } from 'node:fs'
 import type { ModuleOptions } from './module'
+import type { ClientFunctions, ServerFunctions } from './types'
 import { useViteWebSocket } from './utils'
 
-import { setupRPC } from './rpc'
 import { DEVTOOLS_MODULE_ICON, DEVTOOLS_MODULE_NAME, DEVTOOLS_MODULE_TITLE, DEVTOOLS_RPC_NAMESPACE, DEVTOOLS_UI_PATH, DEVTOOLS_UI_PORT } from './contants'
+import { setupRPC } from './rpc'
 
 export function setupDevToolsUI(options: ModuleOptions) {
   const nuxt = useNuxt()
@@ -48,12 +47,5 @@ export function setupDevToolsUI(options: ModuleOptions) {
         type: 'iframe',
         src: DEVTOOLS_UI_PATH,
       },
-  })
-
-  const wsServer = useViteWebSocket(nuxt)
-  onDevToolsInitialized(async () => {
-    const rpcFunctions = setupRPC({ options, wsServer, nuxt })
-
-    extendServerRpc<ClientFunctions, ServerFunctions>(DEVTOOLS_RPC_NAMESPACE, rpcFunctions)
   })
 }

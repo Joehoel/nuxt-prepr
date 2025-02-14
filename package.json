@@ -1,7 +1,7 @@
 {
   "name": "nuxt-prepr",
   "version": "1.0.0",
-  "description": "My new Nuxt module",
+  "description": "Nuxt Prepr Integration",
   "repository": "joehoel/nuxt-prepr",
   "license": "MIT",
   "type": "module",
